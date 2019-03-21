@@ -1,0 +1,4 @@
+[submodule "nixpkgs"]
+	path = nixpkgs
+	url = https://github.com/illegalprime/nixpkgs.git
+	branch = nixos-on-arm
