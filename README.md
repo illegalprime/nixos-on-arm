@@ -21,9 +21,11 @@ sudo bmaptool copy --nobmap result/sd-image/nixos-sd-image-*.img /dev/sdX
 1. only the BeagleBone Green
 2. Networking & SSH
 3. the BeagleBone's UART
-4. not much else has been tested
+4. a bunch of standalone packages (vim, nmap, git, gcc, python, etc.)
+5. all the `nix` utilities!
 
 ## What Doesn't Work
 
-1. `nix` itself! (it contains references to x86 packages)
-2. nix channels are also not packaged with the image for some reason
+1. nix channels are also not packaged with the image for some reason do `nix-channel --update`
+2. there are no binary caches, so you must build everything yourself :'(
+3. there's still a good amount of x86 stuff that gets in there accidentally
