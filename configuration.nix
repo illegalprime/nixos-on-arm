@@ -58,6 +58,8 @@ in
     vim
     man
     nmap
+    usbutils
+    aircrack-ng
   ];
 
   # setup networking & SSH
@@ -74,6 +76,9 @@ in
   boot.loader.grub.enable = false;
   boot.loader.systemd-boot.enable = false;
   boot.loader.generic-extlinux-compatible.enable = true;
+
+  # for the memes
+  boot.kernelPackages = pkgs.linuxPackages_4_20;
 
   # set a default root password
   users.mutableUsers = false;
