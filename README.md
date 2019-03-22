@@ -29,3 +29,5 @@ sudo bmaptool copy --nobmap result/sd-image/nixos-sd-image-*.img /dev/sdX
 1. nix channels are also not packaged with the image for some reason do `nix-channel --update`
 2. there are no binary caches, so you must build everything yourself :'(
 3. there's still a good amount of x86 stuff that gets in there accidentally
+4. the beaglebone's USB port!!
+

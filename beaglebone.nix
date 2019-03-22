@@ -1,5 +1,6 @@
+with builtins;
 {
-  config = "armv7-unknown-linux-gnueabihf";
+  config = "armv7l-unknown-linux-gnueabihf";
   system = "armv7l-linux";
   platform = {
     name = "beaglebone";

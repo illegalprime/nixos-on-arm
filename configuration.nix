@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   beaglebone = import ./beaglebone.nix;
 in
@@ -13,6 +13,7 @@ in
   # should.
   system.stateVersion = "unstable"; # Did you read the comment?
 
+  # specify our target system and add an overlay to make our system smaller
   nixpkgs.crossSystem = beaglebone;
   nixpkgs.overlays = [
     (self: super: {
@@ -41,6 +42,10 @@ in
   documentation.man.enable = false;
   programs.command-not-found.enable = false;
 
+  # use ARMv7 binary cache
+  nix.binaryCaches = lib.mkForce [ "http://nixos-arm.dezgeg.me/channel" ];
+  nix.binaryCachePublicKeys = [ "nixos-arm.dezgeg.me-1:xBaUKS3n17BZPKeyxL4JfbTqECsT+ysbDJz29kLFRW0=%" ];
+
   # Automatically log in at the virtual consoles.
   services.mingetty.autologinUser = "root";
 
@@ -55,6 +60,7 @@ in
     nmap
   ];
 
+  # setup networking & SSH
   networking.hostName = "nixos-on-arm";
   networking.useNetworkd = true;
   networking.firewall.enable = false;
@@ -73,8 +79,11 @@ in
   users.mutableUsers = false;
   users.users.root.password = "toor";
 
+  # build & install boot loader
   sdImage.populateBootCommands = let
     kernel = beaglebone.platform.kernelTarget;
+    init = "${config.system.build.toplevel}/init";
+    root = "/dev/mmcblk0p2";
     uboot = pkgs.buildUBoot {
       defconfig = "am335x_evm_defconfig";
       extraMeta.platforms = [beaglebone.system];
@@ -90,7 +99,7 @@ in
       loaduimage=fatload mmc 0:1 ''${loadaddr} ''${bootfile}
       uenvcmd=mmc rescan; run loaduimage; run loadfdt; run fdtboot
       fdtboot=run mmc_args; run mmcargs; bootz ''${loadaddr} - ''${fdtaddr}
-      mmc_args=setenv bootargs console=''${console} ''${optargs} root=/dev/mmcblk0p2 rootfstype=ext4 init=${config.system.build.toplevel}/init
+      mmc_args=setenv bootargs console=''${console} ''${optargs} root=${root} rootfstype=ext4 init=${init}
     '';
   in ''
     cp ${uboot}/MLO boot/
