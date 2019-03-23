@@ -16,6 +16,12 @@ Installing:
 sudo bmaptool copy --nobmap result/sd-image/nixos-sd-image-*.img /dev/sdX
 ```
 
+## Demo
+
+Currently `ap-puns.nix` provides a service which will send out AP beacons of WiFi puns. This is a demo showing how one can build their own OS configured to do something out-of-the-box.
+
+I think it's neat, much better than installing a generic Linux and configuring services yourself on the target itself.
+
 ## What Works
 
 1. only the BeagleBone Green
@@ -37,6 +43,7 @@ sudo bmaptool copy --nobmap result/sd-image/nixos-sd-image-*.img /dev/sdX
 - [ ] libxml2Python needs a PR
 - [ ] udisks needs a PR
 - [ ] btrfs-utils needs a PR
+- [ ] dhcp needs a PR
 - [ ] nix: https://github.com/NixOS/nixpkgs/pull/58104
 - [ ] nss: https://github.com/NixOS/nixpkgs/pull/58063
 - [ ] fix sd-image resizing: https://github.com/NixOS/nixpkgs/pull/58059

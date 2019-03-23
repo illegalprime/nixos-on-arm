@@ -5,6 +5,8 @@ in
 {
   imports = [
     ./nixpkgs/nixos/modules/installer/cd-dvd/sd-image.nix
+    ./networking.nix
+    ./ap-puns.nix
   ];
 
   # this value determines the NixOS release with which your system is to be
@@ -59,7 +61,7 @@ in
     man
     nmap
     usbutils
-    aircrack-ng
+    htop
   ];
 
   # setup networking & SSH
@@ -79,6 +81,9 @@ in
 
   # for the memes
   boot.kernelPackages = pkgs.linuxPackages_4_20;
+
+  # enable free firmware
+  hardware.enableRedistributableFirmware = true;
 
   # set a default root password
   users.mutableUsers = false;
