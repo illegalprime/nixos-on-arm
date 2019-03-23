@@ -2,25 +2,42 @@
 
 This is a WIP to _cross compile_ NixOS to run on ARM targets.
 
-Building:
+### Building
 
 ```
 git clone --recursive https://github.com/illegalprime/nixos-on-arm.git
 cd nixos-on-arm
-nix-build nixpkgs/nixos -I nixos-config=configuration.nix -A config.system.build.sdImage
 ```
 
-Installing:
+This repository was reorganized to be able to build different boards if/when different ones are written. To build use:
+
+```
+nix build -f . \
+  -I nixpkgs=nixpkgs \
+  -I machine=machines/BOARD_TYPE \
+  -I image=images/NIX_CONFIGURATION
+```
+
+as an example / demo you can do:
+
+```
+nix build -f . \
+  -I nixpkgs=nixpkgs \
+  -I machine=machines/beaglebone \
+  -I image=images/ap-puns
+```
+
+Currently `images/ap-puns` provides a service which will send out AP beacons of WiFi puns. This is a demo showing how one can build their own OS configured to do something out-of-the-box.
+
+I think it's neat, much better than installing a generic Linux and configuring services yourself on the target.
+
+### Installing:
+
+`bmap` is really handy here.
 
 ```
 sudo bmaptool copy --nobmap result/sd-image/nixos-sd-image-*.img /dev/sdX
 ```
-
-## Demo
-
-Currently `ap-puns.nix` provides a service which will send out AP beacons of WiFi puns. This is a demo showing how one can build their own OS configured to do something out-of-the-box.
-
-I think it's neat, much better than installing a generic Linux and configuring services yourself on the target itself.
 
 ## What Works
 

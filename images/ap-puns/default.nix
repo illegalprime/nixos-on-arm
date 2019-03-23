@@ -1,20 +1,15 @@
-{ pkgs, ... }:
+{ ... }:
 {
-  environment.systemPackages = with pkgs; [
-    aircrack-ng
-    wpa_supplicant
-    dhcp
+  imports = [
+    ../minimal
+    ./service.nix
   ];
 
   boot.kernelPatches = [
     {
-      name = "networking";
+      name = "ralink-chipset";
       patch = null;
       extraConfig = ''
-        IP_NF_IPTABLES m
-
-        RTL8187 m
-
         WLAN_VENDOR_RALINK y
         RT2X00 m
         RT2800USB m
