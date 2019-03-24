@@ -18,7 +18,7 @@ nix build -f . \
   -I image=images/NIX_CONFIGURATION
 ```
 
-as an example / demo you can do:
+#### BeagleBone Green
 
 ```
 nix build -f . \
@@ -31,6 +31,21 @@ Currently `images/ap-puns` provides a service which will send out AP beacons of 
 
 I think it's neat, much better than installing a generic Linux and configuring services yourself on the target.
 
+#### Raspberry Pi Zero (W)
+
+Both raspberry pi zeros are supported now! They come with cool OTG features:
+
+```
+nix build -f . \
+  -I nixpkgs=nixpkgs \
+  -I machine=machines/raspberrypi-zerow \
+  -I image=images/rpi0-otg-serial
+```
+
+This will let you power and access the Raspberry Pi via serial through it's USB port.
+Be sure to plug your micro USB cable in the data port, not the power port.
+
+
 ### Installing:
 
 `bmap` is really handy here.
@@ -41,9 +56,9 @@ sudo bmaptool copy --nobmap result/sd-image/nixos-sd-image-*.img /dev/sdX
 
 ## What Works
 
-1. only the BeagleBone Green
+1. BeagleBone Green (and now the Raspberry Pi Zero & Zero W!)
 2. Networking & SSH
-3. the BeagleBone's UART
+3. the BeagleBone's UART (Raspberry Pi Zero's serial port)
 4. a bunch of standalone packages (vim, nmap, git, gcc, python, etc.)
 5. all the `nix` utilities!
 6. the USB port!
