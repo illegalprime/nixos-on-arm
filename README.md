@@ -45,6 +45,22 @@ nix build -f . \
 This will let you power and access the Raspberry Pi via serial through it's USB port.
 Be sure to plug your micro USB cable in the data port, not the power port.
 
+The first boot takes longer since it resizes the SD card to fill its entire space, so the serial device (usually `/dev/ttyACM0`) might take longer to show up.
+
+You can also build an image with turns the USB port into an Ethernet adapter, letting you SSH into the raspberry pi by plugging it into your computer:
+
+```
+nix build -f . \
+  -I nixpkgs=nixpkgs \
+  -I machine=machines/raspberrypi-zerow \
+  -I image=images/rpi0-otg-ether
+```
+
+copy it to an SD card ('Installing' section), plug it in, then just:
+
+```
+ssh root@10.0.3.1
+```
 
 ### Installing:
 
@@ -68,6 +84,8 @@ sudo bmaptool copy --nobmap result/sd-image/nixos-sd-image-*.img /dev/sdX
 1. nix channels are also not packaged with the image for some reason do `nix-channel --update`
 2. there are no binary caches, so you must build everything yourself :'(
 3. there's still a good amount of x86 stuff that gets in there accidentally
+4. bluetooth on the raspberry pi zeros (and likely on all the other platforms)
+5. other OTG modules are not implemented yet
 
 ## What Needs to Be Done
 
