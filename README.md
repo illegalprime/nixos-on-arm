@@ -93,7 +93,7 @@ sudo bmaptool copy --nobmap result/sd-image/nixos-sd-image-*.img /dev/sdX
 - [ ] libxml2Python needs a PR
 - [ ] udisks needs a PR
 - [ ] btrfs-utils needs a PR
-- [ ] dhcp needs a PR
+- [ ] dhcp: https://github.com/NixOS/nixpkgs/pull/58305
 - [ ] nix: https://github.com/NixOS/nixpkgs/pull/58104
 - [ ] nss: https://github.com/NixOS/nixpkgs/pull/58063
 - [ ] fix sd-image resizing: https://github.com/NixOS/nixpkgs/pull/58059
@@ -113,7 +113,7 @@ sudo bmaptool copy --nobmap result/sd-image/nixos-sd-image-*.img /dev/sdX
 ### For Fun
 - [ ] cross-compiling nodePackages still needs a PR!
 - [ ] erlang: https://github.com/NixOS/nixpkgs/pull/58042
-- [ ] autossh: https://github.com/NixOS/nixpkgs/pull/57825
+- [x] autossh: https://github.com/NixOS/nixpkgs/pull/57825
 - [ ] libmodbus: https://github.com/NixOS/nixpkgs/pull/57824
 - [x] nmap: https://github.com/NixOS/nixpkgs/pull/57822
 - [x] highlight: https://github.com/NixOS/nixpkgs/pull/57821
