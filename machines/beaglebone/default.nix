@@ -12,10 +12,10 @@ in
   # specify a good kernel version
   boot.kernelPackages = pkgs.linuxPackages_4_20;
 
-  # do our boot-loader
+  # do our own boot-loader
   boot.loader.grub.enable = false;
   boot.loader.systemd-boot.enable = false;
-  boot.loader.generic-extlinux-compatible.enable = true;
+  boot.loader.generic-extlinux-compatible.enable = false;
 
   # build & install boot loader
   sdImage.populateBootCommands = let
