@@ -28,6 +28,7 @@ nix build -f . \
 ```
 
 Currently `images/ap-puns` provides a service which will send out AP beacons of WiFi puns. This is a demo showing how one can build their own OS configured to do something out-of-the-box.
+(NOTE you need a USB WiFi dongle, I included kernel modules for the Ralink chipset)
 
 I think it's neat, much better than installing a generic Linux and configuring services yourself on the target.
 
@@ -102,10 +103,10 @@ sudo bmaptool copy --nobmap result/sd-image/nixos-sd-image-*.img /dev/sdX
 - [x] libatasmart: https://github.com/NixOS/nixpkgs/pull/58053
 - [ ] polkit: https://github.com/NixOS/nixpkgs/pull/58052
 - [ ] spidermonkey: https://github.com/NixOS/nixpkgs/pull/58049
-- [ ] libndctl: https://github.com/NixOS/nixpkgs/pull/58047
+- [x] libndctl: https://github.com/NixOS/nixpkgs/pull/58047
 - [x] gpgme: https://github.com/NixOS/nixpkgs/pull/58046
 - [ ] inetutils: https://github.com/NixOS/nixpkgs/pull/57819
-- [ ] gnupg: https://github.com/NixOS/nixpkgs/pull/57818
+- [x] gnupg: https://github.com/NixOS/nixpkgs/pull/57818
 - [ ] libassuan: https://github.com/NixOS/nixpkgs/pull/57815
 - [x] perlPackages.TermReadKey: https://github.com/NixOS/nixpkgs/pull/56019
 - [ ] maybe a beaglebone target should be added to nix
