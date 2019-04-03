@@ -1,5 +1,7 @@
 language: nix
 nix: 2.2.1
+git:
+  submodules_depth: 2
 script: |
   # load the cache
   nix-env -iA cachix -f https://cachix.org/api/v1/install
