@@ -1,8 +1,8 @@
-# NixOS on ARM
+# NixOS on ARM [![Build Status](https://travis-ci.org/illegalprime/nixos-on-arm.svg?branch=master)](https://travis-ci.org/illegalprime/nixos-on-arm)
 
 This is a WIP to _cross compile_ NixOS to run on ARM targets.
 
-### Building
+## Building
 
 ```
 git clone --recursive https://github.com/illegalprime/nixos-on-arm.git
@@ -18,7 +18,18 @@ nix build -f . \
   -I image=images/NIX_CONFIGURATION
 ```
 
-#### BeagleBone Green
+### Using Cachix
+
+This repository uses Travis to keep a fresh cachix cache, which you can use to speed up your builds:
+
+```bash
+# install cachix if you haven't already
+nix-env -iA cachix -f https://cachix.org/api/v1/install
+# use this cache when building
+cachix use cross-armed
+```
+
+### BeagleBone Green
 
 ```
 nix build -f . \
@@ -32,7 +43,7 @@ Currently `images/ap-puns` provides a service which will send out AP beacons of 
 
 I think it's neat, much better than installing a generic Linux and configuring services yourself on the target.
 
-#### Raspberry Pi Zero (W)
+### Raspberry Pi Zero (W)
 
 Both raspberry pi zeros are supported now! They come with cool OTG features:
 
@@ -63,7 +74,7 @@ copy it to an SD card ('Installing' section), plug it in, then just:
 ssh root@10.0.3.1
 ```
 
-### Installing:
+## Installing:
 
 `bmap` is really handy here.
 

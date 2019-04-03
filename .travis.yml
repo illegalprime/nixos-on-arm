@@ -3,7 +3,14 @@ nix: 2.2.1
 git:
   submodules_depth: 2
 sudo: true
+
 script: |
+  set -euxo pipefail
+
+  # enable the sandbox
+  sudo mkdir -p /etc/nix
+  echo 'sandbox = true' | sudo tee -a /etc/nix/nix.conf
+
   # load the cache
   nix-env -iA cachix -f https://cachix.org/api/v1/install
   cachix authtoken "$CACHIX_AUTH_TOKEN"
