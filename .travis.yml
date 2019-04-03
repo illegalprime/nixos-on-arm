@@ -2,14 +2,13 @@ language: nix
 nix: 2.2.1
 git:
   submodules_depth: 2
-sudo: true
 
 script: |
+  (
   set -euxo pipefail
 
-  # enable the sandbox
-  sudo mkdir -p /etc/nix
-  echo 'sandbox = true' | sudo tee -a /etc/nix/nix.conf
+  # print something so Travis doesn't kill us
+  while sleep 5m; do echo "=====[ $SECONDS seconds, nix still building... ]====="; done &
 
   # load the cache
   nix-env -iA cachix -f https://cachix.org/api/v1/install
@@ -18,16 +17,26 @@ script: |
 
   # build an rpi0 sample image
   nix-build . \
+    --cores 2 \
+    --max-jobs 2 \
+    --no-build-output \
     -I nixpkgs=nixpkgs \
     -I machine=machines/raspberrypi-zerow \
     -I image=images/rpi0-otg-ether
 
-  cachix push cross-armed result
+  cachix push cross-armed $(nix-store -qd result)
 
   # build a beaglebone sample image
   nix-build . \
+    --cores 2 \
+    --max-jobs 2 \
+    --no-build-output \
     -I nixpkgs=nixpkgs \
     -I machine=machines/beaglebone \
     -I image=images/minimal
 
-  cachix push cross-armed result
+  cachix push cross-armed $(nix-store -qd result)
+
+  # kill the background process
+  kill %1
+  )
