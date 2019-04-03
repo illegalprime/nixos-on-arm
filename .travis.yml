@@ -2,19 +2,25 @@ language: nix
 nix: 2.2.1
 git:
   submodules_depth: 2
+sudo: true
 script: |
   # load the cache
   nix-env -iA cachix -f https://cachix.org/api/v1/install
+  cachix authtoken "$CACHIX_AUTH_TOKEN"
   cachix use cross-armed
 
   # build an rpi0 sample image
-  nix build -f . \
+  nix-build . \
     -I nixpkgs=nixpkgs \
     -I machine=machines/raspberrypi-zerow \
     -I image=images/rpi0-otg-ether
 
+  cachix push cross-armed result
+
   # build a beaglebone sample image
-  nix build -f . \
+  nix-build . \
     -I nixpkgs=nixpkgs \
     -I machine=machines/beaglebone \
     -I image=images/minimal
+
+  cachix push cross-armed result
