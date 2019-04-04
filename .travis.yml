@@ -12,8 +12,12 @@ script: |
 
   # load the cache
   nix-env -iA cachix -f https://cachix.org/api/v1/install
-  cachix authtoken "$CACHIX_AUTH_TOKEN"
   cachix use cross-armed
+
+  # login if we have permission
+  if [[ ${CACHIX_AUTH_TOKEN:-} ]]; then
+    cachix authtoken "$CACHIX_AUTH_TOKEN"
+  fi
 
   # build an rpi0 sample image
   nix-build . \
@@ -24,7 +28,10 @@ script: |
     -I machine=machines/raspberrypi-zerow \
     -I image=images/rpi0-otg-ether
 
-  cachix push cross-armed $(nix-store -qd result)
+  # push rpi0 with permission
+  if [[ ${CACHIX_AUTH_TOKEN:-} ]]; then
+    cachix push cross-armed $(nix-store -qd result)
+  fi
 
   # build a beaglebone sample image
   nix-build . \
@@ -35,7 +42,10 @@ script: |
     -I machine=machines/beaglebone \
     -I image=images/minimal
 
-  cachix push cross-armed $(nix-store -qd result)
+  # push beaglebone with permission
+  if [[ ${CACHIX_AUTH_TOKEN:-} ]]; then
+    cachix push cross-armed $(nix-store -qd result)
+  fi
 
   # kill the background process
   kill %1
