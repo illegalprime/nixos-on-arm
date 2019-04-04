@@ -6,11 +6,8 @@ in
   # specify the system we're compiling to
   nixpkgs.crossSystem = beaglebone;
 
-  # enable free firmware
-  hardware.enableRedistributableFirmware = true;
-
   # specify a good kernel version
-  boot.kernelPackages = pkgs.linuxPackages_4_20;
+  boot.kernelPackages = pkgs.linuxPackages_5_0;
 
   # do our own boot-loader
   boot.loader.grub.enable = false;

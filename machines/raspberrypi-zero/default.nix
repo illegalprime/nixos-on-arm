@@ -11,10 +11,7 @@ with lib;
 
   # pick the right kernel
   boot.consoleLogLevel = mkDefault 7;
-  boot.kernelPackages = pkgs.linuxPackages_4_20;
-
-  # enable free firmware
-  hardware.enableRedistributableFirmware = true;
+  boot.kernelPackages = pkgs.linuxPackages_5_0;
 
   # set cross compiling
   nixpkgs.crossSystem = systems.elaborate systems.examples.raspberryPi;
