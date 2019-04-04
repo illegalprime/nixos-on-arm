@@ -17,7 +17,7 @@ for derivation in "${derivations[@]}"; do
     elif [[ "$path" =~ -dev$ ]]; then # dev outputs are meant for the build system
         system[${path}]='build'
         echo ' (assuming build)' >&2
-    elif find -L "$path" -type f -exec file {} + | grep 'x86-64' >/dev/null; then
+    elif find "$path" -type f -exec file {} + | grep 'x86-64' >/dev/null; then
         system[${path}]='build'
         echo ' build' >&2
     else
