@@ -43,6 +43,21 @@ Currently `images/ap-puns` provides a service which will send out AP beacons of 
 
 I think it's neat, much better than installing a generic Linux and configuring services yourself on the target.
 
+### UniFi Controller
+
+You can build an image which starts a UniFi controller so you don't have to buy one!
+This is useful if you have a UniFi router or AP, which uses this controller for extra memory and processing power.
+Currently tested with the beaglebone:
+
+```
+nix build -f . \
+  -I nixpkgs=nixpkgs \
+  -I machine=machines/beaglebone \
+  -I image=images/unifi
+```
+
+Since the beaglebone is slow, it could take a while to boot.
+
 ### Raspberry Pi Zero (W)
 
 Both raspberry pi zeros are supported now! They come with cool OTG features:
