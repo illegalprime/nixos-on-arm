@@ -30,6 +30,7 @@ script: |
 
   # push rpi0 with permission
   if [[ ${CACHIX_AUTH_TOKEN:-} ]]; then
+    cachix push cross-armed $(readlink -f result)
     cachix push cross-armed $(nix-store -qd result)
   fi
 
@@ -44,6 +45,7 @@ script: |
 
   # push beaglebone with permission
   if [[ ${CACHIX_AUTH_TOKEN:-} ]]; then
+    cachix push cross-armed $(readlink -f result)
     cachix push cross-armed $(nix-store -qd result)
   fi
 
