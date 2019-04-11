@@ -31,7 +31,7 @@ with lib;
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" "8.8.4.4" ];
 
   # SSH
-  services.openssh.enable = true;
+  services.openssh.enable = mkDefault true;
   services.openssh.permitRootLogin = mkDefault "yes";
 
   # DNS
