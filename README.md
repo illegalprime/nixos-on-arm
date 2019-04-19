@@ -125,34 +125,35 @@ sudo bmaptool copy --nobmap result/sd-image/nixos-sd-image-*.img /dev/sdX
 - [ ] use host coreutils in perl derivation (need to make a PR)
 - [ ] use host shell in nixos-tools (need to make a PR)
 - [ ] gcc contamination: https://github.com/NixOS/nixpkgs/pull/58606
-- [ ] dhcp: https://github.com/NixOS/nixpkgs/pull/58305
 - [ ] nix: https://github.com/NixOS/nixpkgs/pull/58104
 - [ ] nss: https://github.com/NixOS/nixpkgs/pull/58063
 - [ ] fix sd-image resizing: https://github.com/NixOS/nixpkgs/pull/58059
 - [ ] nilfs-utils: https://github.com/NixOS/nixpkgs/pull/58056
 - [ ] volume_key: https://github.com/NixOS/nixpkgs/pull/58054
-- [ ] polkit: https://github.com/NixOS/nixpkgs/pull/58052
-- [ ] spidermonkey: https://github.com/NixOS/nixpkgs/pull/58049
-- [ ] inetutils: https://github.com/NixOS/nixpkgs/pull/57819
-- [ ] libassuan: https://github.com/NixOS/nixpkgs/pull/57815
 - [ ] patchShebangs: https://github.com/NixOS/nixpkgs/issues/33956 (reverted)
-- [x] libatasmart: https://github.com/NixOS/nixpkgs/pull/58053
-- [x] libndctl: https://github.com/NixOS/nixpkgs/pull/58047
-- [x] gpgme: https://github.com/NixOS/nixpkgs/pull/58046
-- [x] gnupg: https://github.com/NixOS/nixpkgs/pull/57818
-- [x] perlPackages.TermReadKey: https://github.com/NixOS/nixpkgs/pull/56019
-
+- [x] ~libassuan: https://github.com/NixOS/nixpkgs/pull/57815~
+- [x] ~dhcp: https://github.com/NixOS/nixpkgs/pull/58305~
+- [x] ~writeShellScriptBin: https://github.com/NixOS/nixpkgs/pull/58977~
+- [x] ~polkit: https://github.com/NixOS/nixpkgs/pull/58052~
+- [x] ~spidermonkey: https://github.com/NixOS/nixpkgs/pull/58049~
+- [x] ~inetutils: https://github.com/NixOS/nixpkgs/pull/57819~
+- [x] ~libatasmart: https://github.com/NixOS/nixpkgs/pull/58053~
+- [x] ~libndctl: https://github.com/NixOS/nixpkgs/pull/58047~
+- [x] ~gpgme: https://github.com/NixOS/nixpkgs/pull/58046~
+- [x] ~gnupg: https://github.com/NixOS/nixpkgs/pull/57818~
+- [x] ~perlPackages.TermReadKey: https://github.com/NixOS/nixpkgs/pull/56019~
+~
 ### For Fun
 
 - [ ] cross-compiling nodePackages still needs a PR!
 - [ ] erlang: https://github.com/NixOS/nixpkgs/pull/58042
 - [ ] nodejs: https://github.com/NixOS/nixpkgs/pull/57816
-- [x] autossh: https://github.com/NixOS/nixpkgs/pull/57825
-- [x] libmodbus: https://github.com/NixOS/nixpkgs/pull/57824
-- [x] nmap: https://github.com/NixOS/nixpkgs/pull/57822
-- [x] highlight: https://github.com/NixOS/nixpkgs/pull/57821
-- [x] tree: https://github.com/NixOS/nixpkgs/pull/57820
-- [x] devmem2: https://github.com/NixOS/nixpkgs/pull/57817
-- [x] mg: https://github.com/NixOS/nixpkgs/pull/57814
-- [x] rust: https://github.com/NixOS/nixpkgs/pull/56540
-- [x] cmake: https://github.com/NixOS/nixpkgs/pull/56021
+- [x] ~autossh: https://github.com/NixOS/nixpkgs/pull/57825~
+- [x] ~libmodbus: https://github.com/NixOS/nixpkgs/pull/57824~
+- [x] ~nmap: https://github.com/NixOS/nixpkgs/pull/57822~
+- [x] ~highlight: https://github.com/NixOS/nixpkgs/pull/57821~
+- [x] ~tree: https://github.com/NixOS/nixpkgs/pull/57820~
+- [x] ~devmem2: https://github.com/NixOS/nixpkgs/pull/57817~
+- [x] ~mg: https://github.com/NixOS/nixpkgs/pull/57814~
+- [x] ~rust: https://github.com/NixOS/nixpkgs/pull/56540~
+- [x] ~cmake: https://github.com/NixOS/nixpkgs/pull/56021~
