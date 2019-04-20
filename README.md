@@ -131,6 +131,7 @@ sudo bmaptool copy --nobmap result/sd-image/nixos-sd-image-*.img /dev/sdX
 - [ ] nilfs-utils: https://github.com/NixOS/nixpkgs/pull/58056
 - [ ] volume_key: https://github.com/NixOS/nixpkgs/pull/58054
 - [ ] patchShebangs: https://github.com/NixOS/nixpkgs/issues/33956 (reverted)
+- [x] ~strip cross built bins: https://github.com/NixOS/nixpkgs/pull/59787~
 - [x] ~libassuan: https://github.com/NixOS/nixpkgs/pull/57815~
 - [x] ~dhcp: https://github.com/NixOS/nixpkgs/pull/58305~
 - [x] ~writeShellScriptBin: https://github.com/NixOS/nixpkgs/pull/58977~
