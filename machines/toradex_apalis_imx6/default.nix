@@ -7,7 +7,7 @@ in
   nixpkgs.crossSystem = toradex_apalis_imx6;
 
   # enable free firmware
-  hardware.enableRedistributableFirmware = true;
+  hardware.enableRedistributableFirmware = false;
 
   # specify a good kernel version
   boot.kernelPackages = pkgs.linuxPackages_5_0;
