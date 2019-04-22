@@ -49,6 +49,21 @@ script: |
     cachix push cross-armed $(nix-store -qd result)
   fi
 
+  # build a toradex apalis imx6 sample image
+  nix-build . \
+    --cores 2 \
+    --max-jobs 2 \
+    --no-build-output \
+    -I nixpkgs=nixpkgs \
+    -I machine=machines/toradex_apalis_imx6 \
+    -I image=images/minimal
+
+  # push toradex apalis imx6 with permission
+  if [[ ${CACHIX_AUTH_TOKEN:-} ]]; then
+    cachix push cross-armed $(readlink -f result)
+    cachix push cross-armed $(nix-store -qd result)
+  fi
+
   # kill the background process
   kill %1
   )
