@@ -4,8 +4,10 @@ This is a WIP to _cross compile_ NixOS to run on ARM targets.
 
 ## Building
 
+Clone the latest release:
+
 ```
-git clone --recursive https://github.com/illegalprime/nixos-on-arm.git
+git clone -b 0.5.0 --recursive --shallow-submodules https://github.com/illegalprime/nixos-on-arm.git
 cd nixos-on-arm
 ```
 
