@@ -91,6 +91,26 @@ copy it to an SD card ('Installing' section), plug it in, then just:
 ssh root@10.0.3.1
 ```
 
+### A Note on Image Size
+
+Many things affect image size and recently a lot of work has been done to minimize it:
+
+1. splitting gcc libs into different output (https://github.com/NixOS/nixpkgs/pull/58606)
+2. strip in cross builds (https://github.com/NixOS/nixpkgs/pull/59787) (https://github.com/NixOS/nixpkgs/issues/21667#issuecomment-271083104) (https://github.com/NixOS/nixpkgs/pull/15339)
+
+A lot of things still have to be done to remove x86 remnants from accidentally getting into the image (like updating patchShebangs https://github.com/NixOS/nixpkgs/issues/33956), and contaminants can be checked by running `./check-contamination.sh result`.
+
+_With all that being said_ the current smallest image can be built like so:
+
+```
+nix build -f . \
+  -I nixpkgs=nixpkgs \
+  -I machine=machines/beaglebone \
+  -I image=images/smaller
+```
+
+The size of this image is **566 MB**, which is much smaller than the previous record of 2.2GB! But there is still ways to go.
+
 ## Installing:
 
 `bmap` is really handy here.
@@ -111,10 +131,8 @@ sudo bmaptool copy --nobmap result/sd-image/nixos-sd-image-*.img /dev/sdX
 ## What Doesn't Work
 
 1. nix channels are also not packaged with the image for some reason do `nix-channel --update`
-2. there are no binary caches, so you must build everything yourself :'(
-3. there's still a good amount of x86 stuff that gets in there accidentally
-4. bluetooth on the raspberry pi zeros (and likely on all the other platforms)
-5. other OTG modules are not implemented yet
+2. there's still a good amount of x86 stuff that gets in there accidentally
+3. bluetooth on the raspberry pi zeros (and likely on all the other platforms)
 
 ## What Needs to Be Done
 
