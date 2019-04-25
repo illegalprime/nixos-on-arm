@@ -14,11 +14,6 @@ in
   boot.loader.systemd-boot.enable = false;
   boot.loader.generic-extlinux-compatible.enable = false;
 
-  # enable some basic firmware
-  hardware.firmware = with pkgs; [
-    firmwareLinuxNonfree
-  ];
-
   # build & install boot loader
   sdImage.populateBootCommands = let
     kernel = beaglebone.platform.kernelTarget;
