@@ -152,7 +152,7 @@ Some images are full-fledged demos with a use case, and others are just template
 (the size is based off BeagleBone builds)
 
 | Name  | Size  | Description                                                                                                  |
-|-------+-------+--------------------------------------------------------------------------------------------------------------|
+| :---: | :---: |--------------------------------------------------------------------------------------------------------------|
 | base  | > 2GB | the smallest changes to the nix configuration needed to cross-build                                          |
 | mini  | 584MB | smaller than base, with most non-critical services turned off, like `polkit`, `udisks`, `containers`, etc.   |
 | micro | 564MB | smaller than mini, meant to be flashed once and not updated directly (but updated by flashing another image) |
