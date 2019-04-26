@@ -85,10 +85,23 @@ nix build -f . \
   -I image=images/rpi0-otg-ether
 ```
 
-copy it to an SD card ('Installing' section), plug it in, then just:
+copy it to an SD card ('Installing' section), plug it in, wait for it to boot and to show up as an Ethernet device, then just:
 
 ```
 ssh root@10.0.3.1
+```
+
+### Toradex Apalis IMX6 (Community)
+
+Board configurations for this just landed thanks to @deadloko!
+I do not own this board so I cannot test it on every release,
+but it should be similar to the BeagleBone. Build it with:
+
+```
+nix-build . \
+  -I nixpkgs=nixpkgs \
+  -I machine=machines/toradex_apalis_imx6 \
+  -I image=images/minimal
 ```
 
 ### A Note on Image Size
