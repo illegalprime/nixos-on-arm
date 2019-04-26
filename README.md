@@ -2,7 +2,27 @@
 
 This is a WIP to _cross compile_ NixOS to run on ARM targets.
 
-## Building
+## Table of Contents
+
+  * [Building](#building)
+        * [Using Cachix](#using-cachix)
+        * [A Note on Image Size](#a-note-on-image-size)
+    * [BeagleBone Green](#beaglebone-green)
+        * [UniFi Controller](#unifi-controller)
+    * [Raspberry Pi Zero (W)](#raspberry-pi-zero-w)
+    * [Toradex Apalis IMX6 (Community)](#toradex-apalis-imx6-community)
+  * [Installing](#installing)
+  * [Images Overview](#images-overview)
+    * [Image Templates](#image-templates)
+    * [Demos](#demos)
+  * [Contributing](#contributing)
+  * [Current State](#current-state)
+    * [What Works](#what-works)
+    * [What Doesn't Work](#what-doesnt-work)
+    * [What Needs to Be Done](#what-needs-to-be-done)
+        * [For Fun](#for-fun)
+
+# Building
 
 Clone the latest release:
 
@@ -31,7 +51,18 @@ nix-env -iA cachix -f https://cachix.org/api/v1/install
 cachix use cross-armed
 ```
 
-### BeagleBone Green
+### A Note on Image Size
+
+Many things affect image size and recently a lot of work has been done to minimize it:
+
+1. splitting gcc libs into different output (https://github.com/NixOS/nixpkgs/pull/58606)
+2. strip in cross builds (https://github.com/NixOS/nixpkgs/pull/59787) (https://github.com/NixOS/nixpkgs/issues/21667#issuecomment-271083104) (https://github.com/NixOS/nixpkgs/pull/15339)
+
+A lot of things still have to be done to remove x86 remnants from accidentally getting into the image (like updating patchShebangs https://github.com/NixOS/nixpkgs/issues/33956), and contaminants can be checked by running `./check-contamination.sh result`.
+
+See the [Images Overview](#images-overview) for a breakdown of image sizes.
+
+## BeagleBone Green
 
 ```
 nix build -f . \
@@ -60,7 +91,7 @@ nix build -f . \
 
 Since the beaglebone is slow, it could take a while to boot.
 
-### Raspberry Pi Zero (W)
+## Raspberry Pi Zero (W)
 
 Both raspberry pi zeros are supported now! They come with cool OTG features:
 
@@ -91,7 +122,7 @@ copy it to an SD card ('Installing' section), plug it in, wait for it to boot an
 ssh root@10.0.3.1
 ```
 
-### Toradex Apalis IMX6 (Community)
+## Toradex Apalis IMX6 (Community)
 
 Board configurations for this just landed thanks to @deadloko!
 I do not own this board so I cannot test it on every release,
@@ -101,36 +132,52 @@ but it should be similar to the BeagleBone. Build it with:
 nix-build . \
   -I nixpkgs=nixpkgs \
   -I machine=machines/toradex_apalis_imx6 \
-  -I image=images/minimal
+  -I image=images/mini
 ```
 
-### A Note on Image Size
-
-Many things affect image size and recently a lot of work has been done to minimize it:
-
-1. splitting gcc libs into different output (https://github.com/NixOS/nixpkgs/pull/58606)
-2. strip in cross builds (https://github.com/NixOS/nixpkgs/pull/59787) (https://github.com/NixOS/nixpkgs/issues/21667#issuecomment-271083104) (https://github.com/NixOS/nixpkgs/pull/15339)
-
-A lot of things still have to be done to remove x86 remnants from accidentally getting into the image (like updating patchShebangs https://github.com/NixOS/nixpkgs/issues/33956), and contaminants can be checked by running `./check-contamination.sh result`.
-
-_With all that being said_ the current smallest image can be built like so:
-
-```
-nix build -f . \
-  -I nixpkgs=nixpkgs \
-  -I machine=machines/beaglebone \
-  -I image=images/smaller
-```
-
-The size of this image is **566 MB**, which is much smaller than the previous record of 2.2GB! But there is still ways to go.
-
-## Installing:
+# Installing
 
 `bmap` is really handy here.
 
 ```
 sudo bmaptool copy --nobmap result/sd-image/nixos-sd-image-*.img /dev/sdX
 ```
+
+# Images Overview
+
+Some images are full-fledged demos with a use case, and others are just templates for you to build your own images with.
+
+## Image Templates
+
+(the size is based off BeagleBone builds)
+
+| Name  | Size  | Description                                                                                                  |
+|-------+-------+--------------------------------------------------------------------------------------------------------------|
+| base  | > 2GB | the smallest changes to the nix configuration needed to cross-build                                          |
+| mini  | 584MB | smaller than base, with most non-critical services turned off, like `polkit`, `udisks`, `containers`, etc.   |
+| micro | 564MB | smaller than mini, meant to be flashed once and not updated directly (but updated by flashing another image) |
+| ssh   | 584MB | based off mini but with SSH access                                                                           |
+
+The `micro` image isn't very micro right now, but hopefully it will be soon.
+It's meant to not have any nix utilities or the daemon, a smaller kernel, and generally the bare minimum needed to run on the board.
+Currently, it's not very different from the `mini` image.
+
+## Demos
+
+1. **ap-puns** use `aircrack-ng` to send out fake AP Beacons with pun names
+2. **rpi0-otg-ether** run a Raspberry Pi 0 as an Ethernet Adapter with SSH in OTG mode
+3. **rpi0-otg-serial** run a Raspberry Pi 0 as a serial adapter
+4. **unifi** boot into a UniFi controller that manages UniFi APs
+
+# Contributing
+
+For inspiration either look at the currently open issues or [What Needs to Be Done](#what-needs-to-be-done).
+Otherwise just try it out and put in fixes as you find them, ultimately all fixes that end up here will
+be sent upstream so all of `nixpkgs` can benefit.
+
+Alternatively, send it directly upstream and link the commit in an issue, it will possibly be cherry-picked here.
+
+# Current State
 
 ## What Works
 

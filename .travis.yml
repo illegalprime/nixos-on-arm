@@ -41,7 +41,7 @@ script: |
     --no-build-output \
     -I nixpkgs=nixpkgs \
     -I machine=machines/beaglebone \
-    -I image=images/minimal
+    -I image=images/mini
 
   # push beaglebone with permission
   if [[ ${CACHIX_AUTH_TOKEN:-} ]]; then
@@ -56,7 +56,7 @@ script: |
     --no-build-output \
     -I nixpkgs=nixpkgs \
     -I machine=machines/toradex_apalis_imx6 \
-    -I image=images/minimal
+    -I image=images/mini
 
   # push toradex apalis imx6 with permission
   if [[ ${CACHIX_AUTH_TOKEN:-} ]]; then

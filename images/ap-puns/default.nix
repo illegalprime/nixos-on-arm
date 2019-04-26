@@ -1,7 +1,7 @@
 { ... }:
 {
   imports = [
-    ../minimal
+    ../mini
     ./service.nix
   ];
 

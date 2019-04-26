@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   imports = [
-    ../minimal
+    ../ssh
   ];
 
   boot.otg = {

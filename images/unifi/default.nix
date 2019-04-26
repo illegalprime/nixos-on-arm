@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   imports = [
-    ../minimal
+    ../mini
   ];
 
   # both UniFi and Oracle's JRE are closed-source, we allow that here:
