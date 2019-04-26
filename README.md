@@ -5,8 +5,8 @@ This is a WIP to _cross compile_ NixOS to run on ARM targets.
 ## Table of Contents
 
   * [Building](#building)
-        * [Using Cachix](#using-cachix)
-        * [A Note on Image Size](#a-note-on-image-size)
+    * [Using Cachix](#using-cachix)
+    * [A Note on Image Size](#a-note-on-image-size)
     * [BeagleBone Green](#beaglebone-green)
         * [UniFi Controller](#unifi-controller)
     * [Raspberry Pi Zero (W)](#raspberry-pi-zero-w)
