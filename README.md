@@ -12,6 +12,7 @@ This is a WIP to _cross compile_ NixOS to run on ARM targets.
     * [Raspberry Pi Zero (W)](#raspberry-pi-zero-w)
     * [Toradex Apalis IMX6 (Community)](#toradex-apalis-imx6-community)
   * [Installing](#installing)
+  * [Debugging](#debugging)
   * [Images Overview](#images-overview)
     * [Image Templates](#image-templates)
     * [Demos](#demos)
@@ -142,6 +143,45 @@ nix-build . \
 ```
 sudo bmaptool copy --nobmap result/sd-image/nixos-sd-image-*.img /dev/sdX
 ```
+
+# Debugging
+
+Sometimes when thing go wrong you need to test specific parts of the build,
+this repository is organized so it's easy to do that.
+
+Let's say `dhcp` was broken, you can build just that package with:
+
+```
+nix build -f . \
+  -I nixpkgs=nixpkgs \
+  -I machine=machines/beaglebone \
+  -I image=images/mini \
+  pkgs.dhcp
+```
+
+Similarly you can drop into a shell to inspect the build process for `dhcp` like:
+
+```
+nix-shell --pure . \
+  -I nixpkgs=nixpkgs \
+  -I machine=machines/beaglebone \
+  -I image=images/mini \
+  -A pkgs.dhcp
+```
+
+then you can just call `genericBuild` in the `nix-shell` and simulate building that package.
+
+If you wanted to inspect the final configuration values and other stuff,
+you can drop into a `repl`:
+
+```
+nix repl . \
+  -I nixpkgs=nixpkgs \
+  -I machine=machines/beaglebone \
+  -I image=images/mini \
+```
+
+Then the variable `config` contains the system configuration.
 
 # Images Overview
 
