@@ -6,6 +6,9 @@
   # should.
   system.stateVersion = "unstable"; # Did you read the comment?
 
+  # custom nixos modules
+  imports = [ ../../crosspkgs/modules ];
+
   # use these overlays to work around cross compilation issues
   nixpkgs.overlays = [
     (self: super: {

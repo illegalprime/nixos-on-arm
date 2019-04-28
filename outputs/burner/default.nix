@@ -5,7 +5,6 @@ let
       imports = [
         <nixpkgs/nixos/modules/installer/cd-dvd/sd-image.nix>
         <machine>
-        ../crosspkgs/modules # extra nixos modules
         (import ./configuration.nix args)
       ];
     };
