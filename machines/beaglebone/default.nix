@@ -43,4 +43,33 @@ in
     cp ${config.boot.kernelPackages.kernel}/dtbs/${beaglebone.dtb} boot/
     cp ${uEnv} boot/uEnv.txt
   '';
+
+  #
+  # LEDs (burner images use this for instance)
+  #
+  hardware.leds = [
+	  "beaglebone:green:heartbeat"
+	  "beaglebone:green:mmc0"
+	  "beaglebone:green:usr2"
+	  "beaglebone:green:usr3"
+  ];
+
+  #
+  # Burner Support
+  #
+  hardware.burner = {
+    disk = "/dev/mmcblk1";
+
+    # erase read only boot disk
+    preBurnScript = pkgs.writeScript "beaglebone-pre-burn" ''
+      #! ${pkgs.runtimeShell}
+      set -euxo pipefail
+
+      echo 0 > /sys/block/mmcblk1boot0/force_ro
+      echo 0 > /sys/block/mmcblk1boot1/force_ro
+
+      dd if=/dev/zero of=/dev/mmcblk1boot0 bs=512 count=4096
+      dd if=/dev/zero of=/dev/mmcblk1boot1 bs=512 count=4096
+    '';
+  };
 }

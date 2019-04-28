@@ -1,11 +1,12 @@
+{ payload } @ args:
 let
   nixos = import <nixpkgs/nixos> {
     configuration = { ... }: {
       imports = [
-        ./crosspkgs/modules # extra nixos modules
         <nixpkgs/nixos/modules/installer/cd-dvd/sd-image.nix>
         <machine>
-        <image>
+        ../crosspkgs/modules # extra nixos modules
+        (import ./configuration.nix args)
       ];
     };
   };
