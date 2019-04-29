@@ -13,8 +13,10 @@ function leds_working() {
     local pattern=()
     for i in "${!LEDS[@]}"; do
         pattern[$i]="${LEDS[$i]}"
-        pattern[$((${#LEDS[@]} * 2 - i - 1))]="${LEDS[$i]}"
+        pattern[$((${#LEDS[@]} * 2 - i))]="${LEDS[$i]}"
     done
+    pattern[$((${#LEDS[@]}))]=off
+    pattern[$((${#LEDS[@]} * 2 + 1))]=off
 
     # run the pattern forever
     while :; do

@@ -4,7 +4,7 @@
 with lib.strings;
 {
   imports = [
-    ../images/mini
+    ../../images/mini
   ];
 
   # don't need any networking things
