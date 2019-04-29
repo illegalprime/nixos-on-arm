@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 let
   beaglebone = import ./system.nix;
 in
@@ -18,11 +18,24 @@ in
   sdImage.populateBootCommands = let
     kernel = beaglebone.platform.kernelTarget;
     init = "${config.system.build.toplevel}/init";
-    root = "/dev/mmcblk0p2";
+    root = ''/dev/mmcblk''${mmcdev}p2"'';
     uboot = pkgs.buildUBoot {
       defconfig = "am335x_evm_defconfig";
       extraMeta.platforms = [beaglebone.system];
       filesToInstall = ["MLO" "u-boot.img"];
+      # NOTE: by default u-boot is built to read uEnv.txt from the SD card,
+      # we modify it to attempt to read uEnv.txt from the eMMC as well.
+      extraConfig = lib.strings.replaceStrings ["\n"] [" "] ''CONFIG_BOOTCOMMAND="
+        if test ''${boot_fit} -eq 1; then
+          run update_to_fit;
+        fi;
+        run findfdt;
+        run init_console;
+        run envboot;
+        run bootcmd_mmc1;
+        run bootcmd_legacy_mmc1;
+        run envboot;
+      "'';
     };
     uEnv = pkgs.writeText "uEnv.txt" ''
       bootdir=
@@ -30,8 +43,8 @@ in
       fdtfile=${beaglebone.dtb}
       loadaddr=0x80007fc0
       fdtaddr=0x80F80000
-      loadfdt=fatload mmc 0:1 ''${fdtaddr} ''${fdtfile}
-      loaduimage=fatload mmc 0:1 ''${loadaddr} ''${bootfile}
+      loadfdt=fatload mmc ''${mmcdev}:1 ''${fdtaddr} ''${fdtfile}
+      loaduimage=fatload mmc ''${mmcdev}:1 ''${loadaddr} ''${bootfile}
       uenvcmd=mmc rescan; run loaduimage; run loadfdt; run fdtboot
       fdtboot=run mmc_args; run mmcargs; bootz ''${loadaddr} - ''${fdtaddr}
       mmc_args=setenv bootargs console=''${console} ''${optargs} root=${root} rootfstype=ext4 init=${init}
