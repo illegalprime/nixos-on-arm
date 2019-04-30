@@ -11,7 +11,9 @@ This is a WIP to _cross compile_ NixOS to run on ARM targets.
         * [UniFi Controller](#unifi-controller)
     * [Raspberry Pi Zero (W)](#raspberry-pi-zero-w)
     * [Toradex Apalis IMX6 (Community)](#toradex-apalis-imx6-community)
-  * [Installing](#installing)
+  * [Burning to an SD Card](#burning-to-an-sd-card)
+  * [Burning to the eMMC](#burning-to-the-emmc)
+    * [Adding Burner Support to Your Board](#adding-burner-support-to-your-board)
   * [Debugging](#debugging)
   * [Images Overview](#images-overview)
     * [Image Templates](#image-templates)
@@ -130,19 +132,64 @@ I do not own this board so I cannot test it on every release,
 but it should be similar to the BeagleBone. Build it with:
 
 ```
-nix-build . \
+nix build -f . \
   -I nixpkgs=nixpkgs \
   -I machine=machines/toradex_apalis_imx6 \
   -I image=images/mini
 ```
 
-# Installing
+# Burning to an SD Card
 
-`bmap` is really handy here.
+`bmap` is really handy here (`nix-shell -p bmap-tools`).
 
 ```
 sudo bmaptool copy --nobmap result/sd-image/nixos-sd-image-*.img /dev/sdX
 ```
+
+# Burning to the eMMC
+
+When your image is all ironed out you might want to store it in a more permanent place on your board: the _eMMC_. This type of storage is great because it can't be easily dislodged like an SD card, but it's harder to access.
+
+If you have an SD card port _and_ an eMMC you're in luck, this repository defines an output (a directory in `outputs`) that will build an SD card image that will boot and burn another image onto the eMMC.
+
+To use it, first make sure you have the image you want burned into memory:
+
+```
+nix build -f . \
+  -I nixpkgs=nixpkgs \
+  -I machine=machines/beaglebone \
+  -I image=images/mini \
+  -o to_burn
+```
+
+Then pass that file as an argument to the burner image (note that it's important to use `./` when specifying the payload, since we want nix to see this argument as a path):
+
+```
+nix build -f outputs/burner \
+  -I nixpkgs=nixpkgs \
+  -I machine=machines/beaglebone \
+  --arg payload ./to_burn/sd-image/*.img
+```
+
+Burn the result to an SD card (see [Burning to an SD Card](#burning-to-an-sd-card)) and boot into it. If LEDs for this board were configured, you should see one of the following patterns:
+
+1. Each LED lighting up one by one in sequence means the eMMC is being written to.
+2. All LEDs on means the write has finished successfully, the board will soon be powered off.
+3. All LEDs blinking slowly means an error has occurred during the writing process.
+
+(note that on the BeagleBone you must hold the `USER` button down, plug in power, then let go to boot into your SD card if there's already a boot loader on the eMMC)
+
+## Adding Burner Support to Your Board
+
+If you're writing the definition for a board you might want to enable support for this feature, to do so just implement the options in the `crosspkgs/modules/hardware/burner` module, which at the time of writing consists of only a couple of options:
+
+1. **hardware.burner.disk**: the path to `dd` the image into (the path of the eMMC device)
+2. **hardware.burner.preBurnScript**: a script to run before `dd` is called
+
+You may also define LEDs in the `crosspkgs/modules/hardware/leds` module, which the burner script will use to display its status.
+LEDs are just names of directories in the `/sys/class/leds/` directory.
+
+Take a look at the `beaglebone` image definition if you want a concrete example.
 
 # Debugging
 
