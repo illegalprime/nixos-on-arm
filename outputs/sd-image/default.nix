@@ -7,6 +7,8 @@ let
         <machine>
         <image>
       ];
+
+      sdImage.enable = true;
     };
   };
 in

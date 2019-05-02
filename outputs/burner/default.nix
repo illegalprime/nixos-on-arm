@@ -7,6 +7,8 @@ let
         <machine>
         (import ./configuration.nix args)
       ];
+
+      sdImage.enable = true;
     };
   };
 in
