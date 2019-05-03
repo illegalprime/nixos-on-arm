@@ -42,4 +42,7 @@ with lib;
 
   # shrink boot partition to 25MB
   sdImage.bootSize = mkDefault 25;
+
+  # disable Grub by default, since no boards use it
+  boot.loader.grub.enable = lib.mkDefault false;
 }
