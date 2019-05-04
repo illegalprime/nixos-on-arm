@@ -10,6 +10,7 @@ This is a WIP to _cross compile_ NixOS to run on ARM targets.
     * [BeagleBone Green](#beaglebone-green)
         * [UniFi Controller](#unifi-controller)
     * [Raspberry Pi Zero (W)](#raspberry-pi-zero-w)
+    * [Odroid C2](#odroid-c2)
     * [Toradex Apalis IMX6 (Community)](#toradex-apalis-imx6-community)
   * [Burning to an SD Card](#burning-to-an-sd-card)
   * [Burning to the eMMC](#burning-to-the-emmc)
@@ -124,6 +125,25 @@ copy it to an SD card ('Installing' section), plug it in, wait for it to boot an
 ```
 ssh root@10.0.3.1
 ```
+
+## Odroid C2
+
+This was a really interesting board to work on and a lot of help was taken from
+[jumpnow/meta-odroid-c2](https://github.com/jumpnow/meta-odroid-c2/).
+It's a good example of how to build u-boot, sign it, and couple it with vendor-specific boot loader code.
+This is a pretty good reference implementation for secure-boot and 64-bit arm boards.
+Build it with:
+
+```
+nix build -f . \
+  -I nixpkgs=nixpkgs \
+  -I machine=machines/odroid-c2 \
+  -I image=images/ssh
+```
+
+I haven't implemented building an SD burner for this board yet,
+but it should be straightforward to do and it will be implemented
+once I buy an eMMC.
 
 ## Toradex Apalis IMX6 (Community)
 
