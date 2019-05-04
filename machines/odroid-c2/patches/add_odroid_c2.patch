@@ -1,0 +1,31 @@
+Index: git/include/common/firmware_image_package.h
+===================================================================
+--- git.orig/include/common/firmware_image_package.h
++++ git/include/common/firmware_image_package.h
+@@ -83,6 +83,11 @@
+ 	{0x11449fa4, 0x635e, 0x11e4, 0x87, 0x28, {0x3f, 0x05, 0x72, 0x2a, 0xf3, 0x3d} }
+ #define UUID_NON_TRUSTED_FW_CONTENT_CERT \
+ 	{0xf3c1c48e, 0x635d, 0x11e4, 0xa7, 0xa9, {0x87, 0xee, 0x40, 0xb2, 0x3f, 0xa7} }
++#define UUID_SCP_FIRMWARE_BL30 \
++        {0x3dfd6697, 0xbe89, 0x49e8, 0xae, 0x5d, {0x78, 0xa1, 0x40, 0x60, 0x82, 0x13} }
++#define UUID_SCP_FIRMWARE_BL301  \
++	{0xAABBCCDD, 0xABCD, 0xEFEF, 0xAB, 0xCD, {0x12, 0x34, 0x56, 0x78, 0xAB, 0xCD} }
++
+ 
+ typedef struct fip_toc_header {
+ 	uint32_t	name;
+Index: git/tools/fip_create/fip_create.c
+===================================================================
+--- git.orig/tools/fip_create/fip_create.c
++++ git/tools/fip_create/fip_create.c
+@@ -67,6 +67,10 @@ static entry_lookup_list_t toc_entry_loo
+ 	  "bl2", NULL, FLAG_FILENAME },
+ 	{ "SCP Firmware SCP_BL2", UUID_SCP_FIRMWARE_SCP_BL2,
+ 	  "scp_bl2", NULL, FLAG_FILENAME},
++        { "SCP Firmware BL3-0", UUID_SCP_FIRMWARE_BL30,
++          "bl30", NULL, FLAG_FILENAME},
++        { "SCP Firmware BL3-0-1", UUID_SCP_FIRMWARE_BL301,
++          "bl301", NULL, FLAG_FILENAME},
+ 	{ "EL3 Runtime Firmware BL31", UUID_EL3_RUNTIME_FIRMWARE_BL31,
+ 	  "bl31", NULL, FLAG_FILENAME},
+ 	{ "Secure Payload BL32 (Trusted OS)", UUID_SECURE_PAYLOAD_BL32,
