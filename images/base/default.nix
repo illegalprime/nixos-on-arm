@@ -30,8 +30,4 @@
       nodeEnv = self.callPackage <nixpkgs/pkgs/development/node-packages/node-env.nix> {};
     })
   ];
-
-  # use ARMv7 binary cache
-  nix.binaryCaches = lib.mkForce [ "http://nixos-arm.dezgeg.me/channel" ];
-  nix.binaryCachePublicKeys = [ "nixos-arm.dezgeg.me-1:xBaUKS3n17BZPKeyxL4JfbTqECsT+ysbDJz29kLFRW0=%" ];
 }
