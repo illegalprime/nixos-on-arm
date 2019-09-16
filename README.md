@@ -307,15 +307,15 @@ Alternatively, send it directly upstream and link the commit in an issue, it wil
 - [ ] udisks needs a PR
 - [ ] btrfs-utils needs a PR
 - [ ] use host awk in vim build (need to make PR)
-- [ ] use host coreutils in perl derivation (need to make a PR)
-- [ ] use host shell in nixos-tools (need to make a PR)
 - [ ] gcc contamination: https://github.com/NixOS/nixpkgs/pull/58606
 - [ ] nix: https://github.com/NixOS/nixpkgs/pull/58104
-- [ ] nss: https://github.com/NixOS/nixpkgs/pull/58063
 - [ ] fix sd-image resizing: https://github.com/NixOS/nixpkgs/pull/58059
 - [ ] nilfs-utils: https://github.com/NixOS/nixpkgs/pull/58056
-- [ ] volume_key: https://github.com/NixOS/nixpkgs/pull/58054
 - [ ] patchShebangs: https://github.com/NixOS/nixpkgs/issues/33956 (reverted)
+- [x] ~use host shell: https://github.com/NixOS/nixpkgs/pull/58977~
+- [x] ~nss: https://github.com/NixOS/nixpkgs/pull/58063~
+- [x] ~volume_key: https://github.com/NixOS/nixpkgs/pull/58054~
+- [x] ~perl uses host pwd: https://github.com/NixOS/nixpkgs/pull/58979~
 - [x] ~strip cross built bins: https://github.com/NixOS/nixpkgs/pull/59787~
 - [x] ~libassuan: https://github.com/NixOS/nixpkgs/pull/57815~
 - [x] ~dhcp: https://github.com/NixOS/nixpkgs/pull/58305~
