@@ -15,6 +15,7 @@ This is a WIP to _cross compile_ NixOS to run on ARM targets.
   * [Burning to an SD Card](#burning-to-an-sd-card)
   * [Burning to the eMMC](#burning-to-the-emmc)
     * [Adding Burner Support to Your Board](#adding-burner-support-to-your-board)
+  * [NixOps Deployments](#nixops-deployments)
   * [Debugging](#debugging)
   * [Images Overview](#images-overview)
     * [Image Templates](#image-templates)
@@ -210,6 +211,67 @@ You may also define LEDs in the `crosspkgs/modules/hardware/leds` module, which 
 LEDs are just names of directories in the `/sys/class/leds/` directory.
 
 Take a look at the `beaglebone` image definition if you want a concrete example.
+
+# NixOps Deployments
+
+NixOps support is here! That means you can manage all your devices without re-flashing!
+
+## The Setup
+
+To start burn a base image onto an SD card (this image just contains SSH and a larger boot partition to store new configurations in):
+
+```
+nix build -f . \
+  -I nixpkgs=nixpkgs \
+  -I machine=machines/beaglebone \
+  -I image=images/nixops
+```
+
+Then boot it and add your SSH key because NixOps only supports SSH keys:
+
+```bash
+# copy over the key
+ssh-copy-id root@IP_ADDRESS
+
+# load your SSH keys into your environment
+eval $(ssh-agent -s)
+ssh-add ~/.ssh/id_rsa
+```
+
+Finally, create a NixOps deployment for your devices
+(`iot` can be changed to anything):
+
+```
+nixops create ./nixops.nix -d iot
+```
+
+## Deploying New Configurations
+
+Now you're ready to update your board with some new configurations!
+Just use `nixops deploy` with the `IP` environment variable set to the your device's
+(here we deploy the `ap-puns` image over our original `nixops` image):
+
+```
+IP=YOUR_DEVICES_IP \
+  nixops deploy \
+  -I nixpkgs=nixpkgs \
+  -I machine=machines/beaglebone \
+  -I image=images/ap-puns \
+  -d iot
+```
+
+If you have access to a serial connection, you can pick your generation on boot:
+
+```
+------------------------------------------------------------
+1:      NixOS - Default
+2:      NixOS - Configuration 2 (2019-09-16 14:23 - 19.09pre-git)
+3:      NixOS - Configuration 1 (1970-01-01 01:32 - 19.09pre-git)
+Enter choice:
+```
+
+Otherwise you can take out the SD card and manually edit the `/extlinux/extlinux.conf` file in the boot partition.
+Replace `DEFAULT nixos-default` with `DEFAULT nixos-42` in that file to temporarily boot from the 42nd generation.
 
 # Debugging
 
