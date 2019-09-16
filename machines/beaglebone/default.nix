@@ -28,8 +28,6 @@
   #
   # Bootloader (UBoot, extlinux)
   #
-  boot.loader.grub.enable = false;
-  boot.loader.systemd-boot.enable = false;
   boot.loader.generic-extlinux-compatible = {
     enable = true;
     dtbs = ["am335x-bonegreen.dtb"];
