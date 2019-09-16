@@ -18,6 +18,5 @@ with lib;
   services.resolved.dnssec = "false";
 
   # set a default root password
-  users.mutableUsers = mkDefault false;
-  users.users.root.password = mkDefault "toor";
+  users.users.root.initialPassword = lib.mkDefault "toor";
 }
