@@ -50,9 +50,10 @@ with lib;
   config = let
     module = otg_modules.${config.boot.otg.module};
     link = { "static" = "y"; "module" = "m"; }.${config.boot.otg.link};
-  in {
+  in mkIf config.boot.otg.enable {
+
     # add otg modules if necessary to kernel config
-    boot.kernelPatches = mkIf config.boot.otg.enable [
+    boot.kernelPatches = [
       {
         name = "usb-otg";
         patch = null;
@@ -64,9 +65,12 @@ with lib;
         '';
       }
     ];
+
     # make sure they're loaded when the pi boots
-    boot.kernelModules = mkIf config.boot.otg.enable [
+    boot.kernelModules = [
       "dwc2" "${module.module}"
     ];
+
+    boot.loader.raspberryPi.firmwareConfig = "dtoverlay=dwc2";
   };
 }
