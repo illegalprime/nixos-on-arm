@@ -18,7 +18,7 @@
 
     # NixOps needs SSH Access
     services.openssh.enable = true;
-    services.openssh.permitRootLogin = lib.mkDefault "yes";
-    users.users.root.initialPassword = lib.mkDefault "toor";
+    services.openssh.permitRootLogin = lib.mkOverride 1100 "yes";
+    users.users.root.initialPassword = lib.mkOverride 1100 "toor";
   };
 }
