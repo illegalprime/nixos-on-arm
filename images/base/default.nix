@@ -1,4 +1,5 @@
 { config, pkgs, lib, ... }:
+let platform = config.nixpkgs.crossSystem.platform.name; in
 {
   # this value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
@@ -30,4 +31,7 @@
       nodeEnv = self.callPackage <nixpkgs/pkgs/development/node-packages/node-env.nix> {};
     })
   ];
+
+  networking.hostName = lib.mkDefault "nixos-on-${platform}";
+  sdImage.imageBaseName = lib.mkDefault "nixos-on-${platform}";
 }

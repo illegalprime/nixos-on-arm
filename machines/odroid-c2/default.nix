@@ -41,5 +41,4 @@
   '';
 
   sdImage.bootSize = lib.mkDefault 40;
-  sdImage.imageBaseName = "nixos-on-odroid-c2";
 }

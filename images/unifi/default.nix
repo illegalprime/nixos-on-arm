@@ -31,6 +31,4 @@
 
   # disable SSH, so the attack surface is smaller (for Guest Networks)
   services.openssh.enable = false;
-
-  networking.hostName = "unificontroller";
 }
