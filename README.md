@@ -10,6 +10,8 @@ This is a WIP to _cross compile_ NixOS to run on ARM targets.
     * [BeagleBone Green](#beaglebone-green)
         * [UniFi Controller](#unifi-controller)
     * [Raspberry Pi Zero (W)](#raspberry-pi-zero-w)
+    * [Raspberry Pi 2](#raspberry-pi-2)
+    * [Raspberry Pi 3](#raspberry-pi-3)
     * [Odroid C2](#odroid-c2)
     * [Toradex Apalis IMX6 (Community)](#toradex-apalis-imx6-community)
   * [Burning to an SD Card](#burning-to-an-sd-card)
@@ -127,6 +129,32 @@ copy it to an SD card ('Installing' section), plug it in, wait for it to boot an
 ssh root@10.0.3.1
 ```
 
+## Raspberry Pi 2
+
+The Raspberry Pi 2 is a 32-bit quad core @ 900MHz ARMv7 board with 1GB of RAM.
+You can build for the Raspberry Pi 2, and it works with NixOps!
+
+```
+nix build -f . \
+  -I nixpkgs=nixpkgs \
+  -I machine=machines/raspberrypi-2 \
+  -I image=images/nixops
+```
+
+## Raspberry Pi 3
+
+The Raspberry Pi 3 is a 64-bit quad core @ 1.2GHz ARMv8 board with 1GB of RAM.
+It also has built-in 802.11n WiFi, and 10/100 Ethernet port.
+Bluetooth doesn't work on this platform yet.
+You can build for the Raspberry Pi 3, and it works with NixOps!
+
+```
+nix build -f . \
+  -I nixpkgs=nixpkgs \
+  -I machine=machines/raspberrypi-3 \
+  -I image=images/nixops
+```
+
 ## Odroid C2
 
 This was a really interesting board to work on and a lot of help was taken from
@@ -164,7 +192,7 @@ nix build -f . \
 `bmap` is really handy here (`nix-shell -p bmap-tools`).
 
 ```
-sudo bmaptool copy --nobmap result/sd-image/nixos-sd-image-*.img /dev/sdX
+sudo bmaptool copy --nobmap result/sd-image/*.img /dev/sdX
 ```
 
 # Burning to the eMMC
