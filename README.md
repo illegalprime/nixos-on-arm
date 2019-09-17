@@ -199,25 +199,19 @@ sudo bmaptool copy --nobmap result/sd-image/*.img /dev/sdX
 
 When your image is all ironed out you might want to store it in a more permanent place on your board: the _eMMC_. This type of storage is great because it can't be easily dislodged like an SD card, but it's harder to access.
 
-If you have an SD card port _and_ an eMMC you're in luck, this repository defines an output (a directory in `outputs`) that will build an SD card image that will boot and burn another image onto the eMMC.
+If you have an SD card port _and_ an eMMC you're in luck, this repository defines an output (a directory in `outputs`) that will build an SD card image that will boot and burn another image onto the eMMC. You specify the image you want burned with the usual `-I image=` option.
 
-To use it, first make sure you have the image you want burned into memory:
+We now use `bmaptool` to burn the image over which is faster, has integrity checks, and makes sure to sync the file system.
+We also compress the image so that it can be safely copied over to the burner image.
+
+All you have to do is use the `burner` output:
 
 ```
-nix build -f . \
+nix build \
+  -f outputs/burner \
   -I nixpkgs=nixpkgs \
   -I machine=machines/beaglebone \
-  -I image=images/mini \
-  -o to_burn
-```
-
-Then pass that file as an argument to the burner image (note that it's important to use `./` when specifying the payload, since we want nix to see this argument as a path):
-
-```
-nix build -f outputs/burner \
-  -I nixpkgs=nixpkgs \
-  -I machine=machines/beaglebone \
-  --arg payload ./to_burn/sd-image/*.img
+  -I image=images/nixops
 ```
 
 Burn the result to an SD card (see [Burning to an SD Card](#burning-to-an-sd-card)) and boot into it. If LEDs for this board were configured, you should see one of the following patterns:
