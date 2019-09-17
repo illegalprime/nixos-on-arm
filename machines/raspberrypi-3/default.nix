@@ -32,5 +32,15 @@
     ${installBootLoaderNative} ${toplevel} -d boot
   '';
 
+  # WiFi support
+  hardware.firmware = with pkgs; [
+    raspberrypiWirelessFirmware
+  ];
+  environment.systemPackages = with pkgs; [
+    wirelesstools
+    wpa_supplicant
+    dhcp
+  ];
+
   sdImage.bootSize = lib.mkOverride 1050 64;
 }
