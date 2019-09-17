@@ -19,50 +19,7 @@ script: |
     cachix authtoken "$CACHIX_AUTH_TOKEN"
   fi
 
-  # build an rpi0 sample image
-  nix-build . \
-    --cores 2 \
-    --max-jobs 2 \
-    --no-build-output \
-    -I nixpkgs=nixpkgs \
-    -I machine=machines/raspberrypi-zerow \
-    -I image=images/rpi0-otg-ether
-
-  # push rpi0 with permission
-  if [[ ${CACHIX_AUTH_TOKEN:-} ]]; then
-    cachix push cross-armed $(readlink -f result)
-    cachix push cross-armed $(nix-store -qd result)
-  fi
-
-  # build a beaglebone sample image
-  nix-build . \
-    --cores 2 \
-    --max-jobs 2 \
-    --no-build-output \
-    -I nixpkgs=nixpkgs \
-    -I machine=machines/beaglebone \
-    -I image=images/mini
-
-  # push beaglebone with permission
-  if [[ ${CACHIX_AUTH_TOKEN:-} ]]; then
-    cachix push cross-armed $(readlink -f result)
-    cachix push cross-armed $(nix-store -qd result)
-  fi
-
-  # build a toradex apalis imx6 sample image
-  nix-build . \
-    --cores 2 \
-    --max-jobs 2 \
-    --no-build-output \
-    -I nixpkgs=nixpkgs \
-    -I machine=machines/toradex_apalis_imx6 \
-    -I image=images/mini
-
-  # push toradex apalis imx6 with permission
-  if [[ ${CACHIX_AUTH_TOKEN:-} ]]; then
-    cachix push cross-armed $(readlink -f result)
-    cachix push cross-armed $(nix-store -qd result)
-  fi
+  ./update-cachix.sh
 
   # kill the background process
   kill %1
