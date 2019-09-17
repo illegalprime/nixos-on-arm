@@ -65,11 +65,11 @@ function leds_error() {
 ( set +x; leds_working ) &
 
 # do the actual work
-dd "if=${payload}" "of=${disk}" bs=8M && sync; RET=$?
+bmaptool copy --bmap "$bmap" "$payload" "$disk" || RET=$?
 
 kill %1 # kill the indicator lights
 
-if [[ $RET == 0 ]]; then
+if [[ ${RET:-0} == 0 ]]; then
     leds_done
 else
     leds_error

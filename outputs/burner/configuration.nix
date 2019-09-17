@@ -1,4 +1,4 @@
-{ payload }:
+{ payload, bmap }:
 
 { config, pkgs, lib, ... }:
 with lib.strings;
@@ -17,8 +17,9 @@ with lib.strings;
     wantedBy = [ "multi-user.target" ];
     after = [ "multi-user.target" ];
     description = "Burn Beagle Bone Image";
+    path = with pkgs; [ bmap-tools xz ];
     environment = {
-      payload = "${payload}";
+      inherit payload bmap;
       disk = config.hardware.burner.disk;
       leds = concatStringsSep " " config.hardware.leds;
     };
