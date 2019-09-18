@@ -2,13 +2,65 @@
 with builtins;
 let
   puns = [
-    "Pretty Fly for a WiFi"
-    "Drop it Like It's Hot Spot"
+    # LAN
     "LAN Before Time"
+    "Life in the fast LAN"
+    "The Promised LAN"
+    "House LANnister"
+    "Silence of the LAN"
+    "No LAN for the Wicked"
+    "LAN of Milk and Honey"
+    "The LAN of the Free"
+    "Winter WonderLAN"
+    "Wu Tang LAN"
+    "Iron LAN"
+    "SpiderLAN"
+    
+    # WiFi
     "The WiFi of Khan"
-    "It Burns When IP"
-    "New England Clam Router"
+    "Pretty Fly for a WiFi"
     "Hide Your Kids Hide Your WiFi"
+    "Tell my WiFi I love her"
+    "No more Mr Wi-Fi"
+    "I now prononouce you man and wifi"
+    "They are taking the hobbits to WiFisengard!"
+    "Thou Shalt Not Covet Thy Neighbor’s Wifi"
+    "WiFi like an eagle"
+    "I Believe Wi Can Fi"
+    "Wi of the Figer"
+    "Wi-Fry Chicken"
+    "Your Wifi is in Another Castle"
+    "Do Re Mi Fa So La Wi Fi"
+    "You’re WiFired!"
+    "My Wifu"
+    
+    # Router
+    "New England Clam Router"
+    "Martin Router King"
+    "Routers of Rohan"
+    "The Router Limits"
+    "Go Go Router Rangers"
+    "Brave Little Router"
+    "Vladimir Routin"
+
+    # Companies
+    "Panic at the Cisco"
+    "Abraham Linksys"
+    "Linksys Lohan"
+    "A Linksys to the Past"
+    "For Whom the Belkin Tolls"
+    
+    # other
+    "It Burns When IP"
+    "Drop it Like It's Hot Spot"
+    "Everyday I'm buffering"
+    "Girls Gone Wireless"
+    "Join My Bandwidth"
+    "Winternet is Coming"
+    "The Mad Ping"
+    "Lord of the Ping"
+    "That’s What She SSID"
+    "Capture the Lag"
   ];
 
   iface = "wlan0";
