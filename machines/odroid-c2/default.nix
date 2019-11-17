@@ -20,6 +20,7 @@
         arch = "armv8-a+crc";
       };
     };
+    dtb = "amlogic/meson-gxbb-odroidc2.dtb";
   };
 
   #
@@ -27,7 +28,6 @@
   #
   boot.loader.generic-extlinux-compatible = {
     enable = true;
-    dtbs = ["amlogic/meson-gxbb-odroidc2.dtb"];
   };
   sdImage.populateBootCommands = with config.system.build; ''
     ${installBootLoaderNative} ${toplevel} -d boot
@@ -40,5 +40,5 @@
     dd if=${uboot}/u-boot-dtb.bin of=$img conv=notrunc bs=512 seek=97
   '';
 
-  sdImage.bootSize = lib.mkDefault 40;
+  sdImage.bootSize = lib.mkDefault 50;
 }
